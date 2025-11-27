@@ -394,10 +394,10 @@ const App: React.FC = () => {
       
       {/* Top Header - Only show if not in Editor view */}
       {view !== 'editor' && (
-        <header className="flex-shrink-0 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 z-40 sticky top-0">
+        <header className="flex-shrink-0 flex items-center justify-between px-6 py-4 bg-gradient-to-r from-blue-50/80 via-purple-50/80 to-pink-50/80 dark:bg-dark-bg/80 backdrop-blur-md border-b border-white/20 dark:border-gray-800 z-40 sticky top-0 shadow-sm transition-colors duration-300">
            <div className="flex items-center gap-4 cursor-pointer" onClick={() => { setView('dashboard'); setSearchQuery(''); }}>
-               <img src={LOGO_DESKTOP} alt="Kala Verse" className="h-10 w-auto hidden md:block" />
-               <img src={LOGO_MOBILE} alt="Kala Verse" className="h-8 w-auto md:hidden" />
+               <img src={LOGO_DESKTOP} alt="Kala Verse" className="h-10 w-auto hidden md:block rounded-full" />
+               <img src={LOGO_MOBILE} alt="Kala Verse" className="h-8 w-auto md:hidden rounded-full" />
            </div>
            
            <div className="flex items-center gap-4">
