@@ -23,7 +23,7 @@ export interface ToolDefinition {
   inputs: ToolInput[];
   systemPrompt?: string; // For AI
   model?: string; // Specific model override
-  toolType: 'ai-gen' | 'utility-color' | 'utility-wheel' | 'utility-random';
+  toolType: 'ai-gen' | 'utility-color' | 'utility-wheel' | 'utility-random' | 'utility-flipbook';
 }
 
 export interface ChatMessage {

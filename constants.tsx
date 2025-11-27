@@ -1,3 +1,4 @@
+
 import { 
   PenTool, 
   Palette, 
@@ -11,7 +12,8 @@ import {
   Smile,
   Layout,
   Image as ImageIcon,
-  Type
+  Type,
+  BookOpen
 } from 'lucide-react';
 import { ToolDefinition, Post, Project, UserProfile } from './types';
 
@@ -160,6 +162,15 @@ export const TOOLS: ToolDefinition[] = [
     inputs: [
         { name: 'names', label: 'Names (comma separated)', type: 'textarea' }
     ]
+  },
+  {
+    id: 'flipbook-creator',
+    name: 'Flipbook Creator',
+    category: 'Utility',
+    description: 'Create and share interactive photo flipbooks.',
+    icon: BookOpen,
+    toolType: 'utility-flipbook',
+    inputs: []
   },
   {
     id: 'fake-comment',
