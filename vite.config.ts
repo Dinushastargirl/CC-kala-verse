@@ -7,10 +7,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      // Maps process.env.API_KEY to the build environment variable
-      'process.env.API_KEY': JSON.stringify(env.API_KEY),
-      // Prevents crashes if other process.env access exists
-      'process.env': {}
+      // Safely map only the specific API Key. 
+      // Do NOT map 'process.env': {} as it breaks Vercel/Vite builds.
+      'process.env.API_KEY': JSON.stringify(env.API_KEY)
     },
     server: {
       host: true

@@ -2,9 +2,12 @@
 export default {
   content: [
     "./index.html",
-    "./*.{js,ts,jsx,tsx}",          // Matches App.tsx, index.tsx, types.ts, etc. in root
-    "./components/**/*.{js,ts,jsx,tsx}", // Matches everything in components
-    "./services/**/*.{js,ts,jsx,tsx}"    // Matches everything in services
+    "./App.tsx",
+    "./index.tsx",
+    "./constants.tsx",
+    "./types.ts",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./services/**/*.{js,ts,jsx,tsx}"
   ],
   darkMode: 'class',
   theme: {
