@@ -4,65 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kala Verse</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@400;700&family=Montserrat:wght@500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              accent: {
-                pink: '#EC4899',   /* Pink-500 */
-                purple: '#8B5CF6', /* Purple-500 */
-                blue: '#3B82F6',   /* Blue-500 */
-                teal: '#8B5CF6',   /* Mapping old teal to purple for backward compat */
-                coral: '#EC4899',  /* Mapping old coral to pink for backward compat */
-                yellow: '#FBBF24', /* Amber-400 */
-              },
-              dark: {
-                bg: '#0F172A',     /* Slate-900 - deeper blue-black */
-                surface: '#1E293B',/* Slate-800 */
-              },
-              light: {
-                bg: '#F8FAFC',     /* Slate-50 */
-                surface: '#FFFFFF',
-              }
-            },
-            fontFamily: {
-              sans: ['Inter', 'Lato', 'sans-serif'],
-              heading: ['Poppins', 'Montserrat', 'sans-serif'],
-            },
-            animation: {
-              'spin-slow': 'spin 3s linear infinite',
-              'bounce-slight': 'bounce 0.5s infinite alternate',
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-      }
-      .dark ::-webkit-scrollbar-thumb {
-        background: #475569;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
-    </style>
   <script type="importmap">
 {
   "imports": {
@@ -70,12 +14,15 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>
 </head>
   <body class="bg-light-bg dark:bg-dark-bg text-slate-900 dark:text-white transition-colors duration-300 overflow-hidden">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
