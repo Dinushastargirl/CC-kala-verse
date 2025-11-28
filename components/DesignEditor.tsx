@@ -45,6 +45,7 @@ interface DesignElement {
   fontStyle?: string;
   textAlign?: 'left' | 'center' | 'right';
   opacity?: number;
+  borderRadius?: string | number;
 }
 
 interface DesignEditorProps {

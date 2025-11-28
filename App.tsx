@@ -23,7 +23,8 @@ import {
   Youtube,
   FileText,
   Image as ImageIcon,
-  Monitor
+  Monitor,
+  Layout
 } from 'lucide-react';
 import { TOOLS, LOGO_DESKTOP, LOGO_MOBILE, MOCK_PROJECTS, MOCK_USER } from './constants';
 import { ToolDefinition, View, Theme, ToolCategory } from './types';
@@ -292,4 +293,117 @@ const App: React.FC = () => {
               <div key={project.id} className="group cursor-pointer">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-3 shadow-sm group-hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
                   <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hov
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0 duration-300">
+                    <p className="font-bold text-lg">{project.title}</p>
+                    <p className="text-xs opacity-80">{project.type} • {project.lastEdited}</p>
+                  </div>
+                </div>
+                <h3 className="font-bold text-gray-800 dark:text-white text-sm mt-2">{project.title}</h3>
+                <p className="text-xs text-gray-500">{project.lastEdited}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const NavItemNew = ({ icon: Icon, label, active, onClick }: any) => (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-4 p-3 rounded-xl transition-all group
+        ${active 
+          ? 'bg-white dark:bg-white/10 text-accent-purple shadow-sm' 
+          : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+        }`}
+    >
+      <Icon size={22} className={`transition-transform duration-300 ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
+      <span className={`font-bold text-sm hidden lg:block ${active ? 'text-gray-900 dark:text-white' : ''}`}>{label}</span>
+      {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-purple hidden lg:block" />}
+    </button>
+  );
+
+  return (
+    <div className="flex h-screen bg-light-bg dark:bg-dark-bg text-slate-900 dark:text-white font-sans overflow-hidden transition-colors duration-300">
+      {/* Mobile Nav - Bottom */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center px-4 z-50 pb-safe">
+        <NavItem icon={LayoutGrid} label="Home" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
+        <NavItem icon={GridIcon} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
+        <button 
+          onClick={() => handleCreateNew()} 
+          className="bg-accent-pink text-white p-4 rounded-full -mt-8 shadow-lg shadow-pink-500/30 border-4 border-light-bg dark:border-dark-bg"
+        >
+          <Plus size={24} />
+        </button>
+        <NavItem icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
+        <NavItem icon={User} label="Profile" active={view === 'profile'} onClick={() => setView('profile')} />
+      </div>
+
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex flex-col w-20 lg:w-64 bg-white dark:bg-dark-surface border-r border-gray-200 dark:border-gray-800 h-full transition-all duration-300">
+        <div className="p-6 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold text-xl">
+             K
+          </div>
+          <span className="font-heading font-bold text-xl tracking-tight hidden lg:block">Kala Verse</span>
+        </div>
+
+        <div className="flex-1 flex flex-col gap-2 px-3 py-4">
+          <button 
+            onClick={() => handleCreateNew()}
+            className="mb-6 p-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white rounded-xl shadow-lg shadow-purple-500/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-bold"
+          >
+            <Plus size={20} />
+            <span className="hidden lg:block">Create New</span>
+          </button>
+
+          <NavItemNew icon={LayoutGrid} label="Dashboard" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
+          <NavItemNew icon={Wrench} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
+          <NavItemNew icon={MessageSquare} label="AI Chat" active={view === 'chat'} onClick={() => setView('chat')} />
+          <NavItemNew icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
+          <NavItemNew icon={Layout} label="Templates" active={view === 'templates'} onClick={() => {}} />
+          
+          <div className="flex-1" />
+          
+          <NavItemNew icon={User} label="Profile" active={view === 'profile'} onClick={() => setView('profile')} />
+          <NavItemNew icon={Settings} label="Settings" active={view === 'settings'} onClick={() => setView('settings')} />
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
+         {/* Top Bar for Mobile/Desktop specifics if needed, or just let views handle it */}
+         {view !== 'editor' && (
+           <header className="h-16 flex items-center justify-between px-4 md:px-8 border-b border-gray-200 dark:border-gray-800 bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-sm z-10 sticky top-0 md:hidden">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold">K</div>
+              <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10">
+                 {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
+              </button>
+           </header>
+         )}
+
+         {/* Desktop Top Bar Actions (Theme Toggle) */}
+         {view !== 'editor' && (
+             <div className="absolute top-4 right-8 z-20 hidden md:flex gap-4">
+                 <button 
+                    onClick={toggleTheme}
+                    className="p-3 bg-white dark:bg-dark-surface rounded-full shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 transition-all"
+                 >
+                    {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
+                 </button>
+                 <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-white dark:border-gray-600 shadow-sm cursor-pointer" onClick={() => setView('profile')}>
+                    <img src={MOCK_USER.avatar} alt="Profile" className="w-full h-full object-cover" />
+                 </div>
+             </div>
+         )}
+
+         <div className="flex-1 overflow-y-auto scrollbar-hide">
+            {renderContent()}
+         </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
