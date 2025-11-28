@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   LayoutGrid, 
@@ -316,9 +317,11 @@ const App: React.FC = () => {
       {view !== 'editor' && (
         <header className="h-16 flex items-center justify-between px-4 md:px-8 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md z-20 sticky top-0">
            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold text-xl">
-                 K
-              </div>
+              <img 
+                src={LOGO_DESKTOP} 
+                alt="Kala Verse Logo" 
+                className="w-10 h-10 rounded-full object-cover shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+              />
               <span className="font-heading font-bold text-xl tracking-tight">Kala Verse</span>
            </div>
 

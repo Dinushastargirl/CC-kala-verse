@@ -19,8 +19,8 @@ import { ToolDefinition, Post, Project, UserProfile } from './types';
 
 // Using the logo provided by the user. Note: postimg direct links usually follow this pattern or similar.
 // Falling back to the previous known good link structure if necessary, but attempting to use the user's ID.
-export const LOGO_DESKTOP = "https://i.postimg.cc/8f5WksFT/KALAVERSE-1-removebg-preview.png"; 
-export const LOGO_MOBILE = "https://i.postimg.cc/8f5WksFT/KALAVERSE-1-removebg-preview.png";
+export const LOGO_DESKTOP = "https://i.postimg.cc/R0WXsQcS/KALAVERSE-(1).png"; 
+export const LOGO_MOBILE = "https://i.postimg.cc/R0WXsQcS/KALAVERSE-(1).png";
 
 export const MOCK_USER: UserProfile = {
   name: "Alex Designer",
