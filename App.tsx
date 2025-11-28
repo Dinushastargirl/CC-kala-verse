@@ -85,7 +85,7 @@ const App: React.FC = () => {
         }`}
     >
       <Icon size={24} strokeWidth={active ? 2.5 : 2} className={`transition-transform duration-300 ${active ? '-translate-y-1' : ''}`} />
-      <span className="text-[10px] md:text-xs font-bold tracking-wide">{label}</span>
+      <span className="text-[10px] md:text-xs font-bold tracking-wide hidden md:block">{label}</span>
       {active && <div className="w-1 h-1 rounded-full bg-accent-pink mt-1 shadow-[0_0_8px_rgba(236,72,153,0.8)]" />}
     </button>
   );
@@ -309,99 +309,63 @@ const App: React.FC = () => {
     );
   };
 
-  const NavItemNew = ({ icon: Icon, label, active, onClick }: any) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-4 p-3 rounded-xl transition-all group
-        ${active 
-          ? 'bg-white dark:bg-white/10 text-accent-purple shadow-sm' 
-          : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-        }`}
-    >
-      <Icon size={22} className={`transition-transform duration-300 ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
-      <span className={`font-bold text-sm hidden lg:block ${active ? 'text-gray-900 dark:text-white' : ''}`}>{label}</span>
-      {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-purple hidden lg:block" />}
-    </button>
-  );
-
   return (
-    <div className="flex h-screen bg-light-bg dark:bg-dark-bg text-slate-900 dark:text-white font-sans overflow-hidden transition-colors duration-300">
-      {/* Mobile Nav - Bottom */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center px-4 z-50 pb-safe">
-        <NavItem icon={LayoutGrid} label="Home" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
-        <NavItem icon={GridIcon} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
-        <button 
-          onClick={() => handleCreateNew()} 
-          className="bg-accent-pink text-white p-4 rounded-full -mt-8 shadow-lg shadow-pink-500/30 border-4 border-light-bg dark:border-dark-bg"
-        >
-          <Plus size={24} />
-        </button>
-        <NavItem icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
-        <NavItem icon={User} label="Profile" active={view === 'profile'} onClick={() => setView('profile')} />
-      </div>
+    <div className="flex flex-col h-screen bg-light-bg dark:bg-dark-bg text-slate-900 dark:text-white font-sans overflow-hidden transition-colors duration-300">
+      
+      {/* Header - Always visible in main app */}
+      {view !== 'editor' && (
+        <header className="h-16 flex items-center justify-between px-4 md:px-8 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md z-20 sticky top-0">
+           <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold text-xl">
+                 K
+              </div>
+              <span className="font-heading font-bold text-xl tracking-tight">Kala Verse</span>
+           </div>
 
-      {/* Desktop Sidebar */}
-      <div className="hidden md:flex flex-col w-20 lg:w-64 bg-white dark:bg-dark-surface border-r border-gray-200 dark:border-gray-800 h-full transition-all duration-300">
-        <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold text-xl">
-             K
-          </div>
-          <span className="font-heading font-bold text-xl tracking-tight hidden lg:block">Kala Verse</span>
-        </div>
-
-        <div className="flex-1 flex flex-col gap-2 px-3 py-4">
-          <button 
-            onClick={() => handleCreateNew()}
-            className="mb-6 p-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white rounded-xl shadow-lg shadow-purple-500/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-bold"
-          >
-            <Plus size={20} />
-            <span className="hidden lg:block">Create New</span>
-          </button>
-
-          <NavItemNew icon={LayoutGrid} label="Dashboard" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
-          <NavItemNew icon={Wrench} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
-          <NavItemNew icon={MessageSquare} label="AI Chat" active={view === 'chat'} onClick={() => setView('chat')} />
-          <NavItemNew icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
-          <NavItemNew icon={Layout} label="Templates" active={view === 'templates'} onClick={() => {}} />
-          
-          <div className="flex-1" />
-          
-          <NavItemNew icon={User} label="Profile" active={view === 'profile'} onClick={() => setView('profile')} />
-          <NavItemNew icon={Settings} label="Settings" active={view === 'settings'} onClick={() => setView('settings')} />
-        </div>
-      </div>
+           <div className="flex items-center gap-4">
+               <button 
+                  onClick={toggleTheme}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition-colors"
+               >
+                  {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
+               </button>
+               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-white dark:border-gray-600 shadow-sm cursor-pointer hover:ring-2 hover:ring-accent-purple transition-all" onClick={() => setView('profile')}>
+                  <img src={MOCK_USER.avatar} alt="Profile" className="w-full h-full object-cover" />
+               </div>
+           </div>
+        </header>
+      )}
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-         {/* Top Bar for Mobile/Desktop specifics if needed, or just let views handle it */}
-         {view !== 'editor' && (
-           <header className="h-16 flex items-center justify-between px-4 md:px-8 border-b border-gray-200 dark:border-gray-800 bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-sm z-10 sticky top-0 md:hidden">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center text-white font-bold">K</div>
-              <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10">
-                 {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
-              </button>
-           </header>
-         )}
-
-         {/* Desktop Top Bar Actions (Theme Toggle) */}
-         {view !== 'editor' && (
-             <div className="absolute top-4 right-8 z-20 hidden md:flex gap-4">
-                 <button 
-                    onClick={toggleTheme}
-                    className="p-3 bg-white dark:bg-dark-surface rounded-full shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 transition-all"
-                 >
-                    {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
-                 </button>
-                 <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-white dark:border-gray-600 shadow-sm cursor-pointer" onClick={() => setView('profile')}>
-                    <img src={MOCK_USER.avatar} alt="Profile" className="w-full h-full object-cover" />
-                 </div>
-             </div>
-         )}
-
-         <div className="flex-1 overflow-y-auto scrollbar-hide">
+         <div className="flex-1 overflow-y-auto scrollbar-hide pb-24">
             {renderContent()}
          </div>
       </div>
+
+      {/* Bottom Nav Bar - Visible on all screens for unified 'Desktop Taskbar' look */}
+      {view !== 'editor' && (
+        <div className="fixed bottom-0 left-0 right-0 h-20 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-center items-center px-4 z-50 pb-safe gap-1 md:gap-8 shadow-2xl">
+            <NavItem icon={LayoutGrid} label="Home" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
+            <NavItem icon={Wrench} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
+            <NavItem icon={MessageSquare} label="Chat" active={view === 'chat'} onClick={() => setView('chat')} />
+            
+            <button 
+              onClick={() => handleCreateNew()} 
+              className="bg-accent-pink text-white p-4 rounded-full -mt-10 shadow-lg shadow-pink-500/30 border-4 border-light-bg dark:border-dark-bg hover:scale-110 transition-transform mx-2 md:mx-4 group relative"
+            >
+              <Plus size={24} />
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden md:block">
+                Create
+              </div>
+            </button>
+
+            <NavItem icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
+            <NavItem icon={Layout} label="Templates" active={view === 'templates'} onClick={() => {}} />
+            <NavItem icon={Settings} label="Settings" active={view === 'settings'} onClick={() => setView('settings')} />
+        </div>
+      )}
+
     </div>
   );
 };
