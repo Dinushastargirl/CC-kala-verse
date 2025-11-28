@@ -78,15 +78,15 @@ const App: React.FC = () => {
   const NavItem = ({ icon: Icon, label, active, onClick }: any) => (
     <button
       onClick={onClick}
-      className={`group flex flex-col items-center justify-center gap-1 p-2 md:px-6 md:py-3 rounded-2xl transition-all min-w-[64px]
+      className={`group flex flex-col items-center justify-center gap-1 p-2 md:px-4 md:py-2 rounded-2xl transition-all min-w-[50px] md:min-w-[64px]
         ${active 
           ? 'text-accent-pink bg-accent-pink/10 scale-105' 
           : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5'
         }`}
     >
-      <Icon size={24} strokeWidth={active ? 2.5 : 2} className={`transition-transform duration-300 ${active ? '-translate-y-1' : ''}`} />
-      <span className="text-[10px] md:text-xs font-bold tracking-wide hidden md:block">{label}</span>
-      {active && <div className="w-1 h-1 rounded-full bg-accent-pink mt-1 shadow-[0_0_8px_rgba(236,72,153,0.8)]" />}
+      <Icon size={22} strokeWidth={active ? 2.5 : 2} className={`transition-transform duration-300 ${active ? '-translate-y-0.5' : 'group-hover:-translate-y-0.5'}`} />
+      <span className={`text-[9px] md:text-[10px] font-bold tracking-wide ${active ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`}>{label}</span>
+      {active && <div className="w-1 h-1 rounded-full bg-accent-pink mt-0.5 shadow-[0_0_8px_rgba(236,72,153,0.8)]" />}
     </button>
   );
 
@@ -343,22 +343,26 @@ const App: React.FC = () => {
          </div>
       </div>
 
-      {/* Bottom Nav Bar - Visible on all screens for unified 'Desktop Taskbar' look */}
+      {/* Floating Bottom Taskbar */}
       {view !== 'editor' && (
-        <div className="fixed bottom-0 left-0 right-0 h-20 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-center items-center px-4 z-50 pb-safe gap-1 md:gap-8 shadow-2xl">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-2xl border border-gray-200/50 dark:border-white/10 shadow-2xl shadow-black/20 rounded-full px-4 py-2 flex items-center gap-1 md:gap-2 z-50 transition-all hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-dark-surface/90 max-w-[95vw] overflow-x-auto scrollbar-hide">
             <NavItem icon={LayoutGrid} label="Home" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
             <NavItem icon={Wrench} label="Tools" active={view === 'tools'} onClick={() => setView('tools')} />
             <NavItem icon={MessageSquare} label="Chat" active={view === 'chat'} onClick={() => setView('chat')} />
             
-            <button 
-              onClick={() => handleCreateNew()} 
-              className="bg-accent-pink text-white p-4 rounded-full -mt-10 shadow-lg shadow-pink-500/30 border-4 border-light-bg dark:border-dark-bg hover:scale-110 transition-transform mx-2 md:mx-4 group relative"
-            >
-              <Plus size={24} />
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden md:block">
-                Create
-              </div>
-            </button>
+            {/* Create Button - Floating within the dock */}
+            <div className="mx-2 relative group flex-shrink-0">
+                <button 
+                  onClick={() => handleCreateNew()} 
+                  className="bg-gradient-to-tr from-accent-pink to-accent-purple text-white p-3 md:p-4 rounded-full shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-110 transition-all active:scale-95"
+                >
+                  <Plus size={24} strokeWidth={3} />
+                </button>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1 bg-gray-900 text-white text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl translate-y-2 group-hover:translate-y-0">
+                  Create New
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                </div>
+            </div>
 
             <NavItem icon={Users} label="Community" active={view === 'community'} onClick={() => setView('community')} />
             <NavItem icon={Layout} label="Templates" active={view === 'templates'} onClick={() => {}} />
